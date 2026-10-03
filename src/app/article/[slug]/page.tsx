@@ -34,7 +34,8 @@ export async function generateMetadata({
 }
 
 function renderFormattedParagraph(text: string): React.ReactNode {
-  const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  // Regex to match [label](url), **bold**, *italic*, `code`
+  const regex = /(\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*|\*([^*]+)\*|`([^`]+)`)/g;
   const elements: React.ReactNode[] = [];
   let lastIndex = 0;
   let match: RegExpExecArray | null;
@@ -43,22 +44,50 @@ function renderFormattedParagraph(text: string): React.ReactNode {
     if (match.index > lastIndex) {
       elements.push(text.slice(lastIndex, match.index));
     }
-    const label = match[1];
-    const href = match[2];
-    const isExternal = href.startsWith("http");
 
-    elements.push(
-      <a
-        key={match.index}
-        href={href}
-        target={isExternal ? "_blank" : undefined}
-        rel={isExternal ? "noopener noreferrer" : undefined}
-        className="font-semibold text-[#1c1917] underline decoration-[#a8a29e] hover:decoration-[#1c1917] transition-all inline-flex items-center gap-0.5"
-      >
-        <span>{label}</span>
-        {isExternal && <ExternalLinkIcon className="h-3 w-3 inline text-[#78716c]" />}
-      </a>
-    );
+    if (match[2] && match[3]) {
+      // Link [label](url)
+      const label = match[2];
+      const href = match[3];
+      const isExternal = href.startsWith("http");
+      elements.push(
+        <a
+          key={`link-${match.index}`}
+          href={href}
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noopener noreferrer" : undefined}
+          className="font-semibold text-[#1c1917] underline decoration-[#a8a29e] hover:decoration-[#1c1917] transition-all inline-flex items-center gap-0.5"
+        >
+          <span>{label}</span>
+          {isExternal && <ExternalLinkIcon className="h-3 w-3 inline text-[#78716c]" />}
+        </a>
+      );
+    } else if (match[4]) {
+      // Bold **text**
+      elements.push(
+        <strong key={`bold-${match.index}`} className="font-bold text-[#1c1917]">
+          {match[4]}
+        </strong>
+      );
+    } else if (match[5]) {
+      // Italic *text*
+      elements.push(
+        <em key={`italic-${match.index}`} className="italic text-[#1c1917]">
+          {match[5]}
+        </em>
+      );
+    } else if (match[6]) {
+      // Inline code `code`
+      elements.push(
+        <code
+          key={`code-${match.index}`}
+          className="bg-[#f0ece1] text-[#1c1917] px-1.5 py-0.5 rounded text-sm font-mono font-medium"
+        >
+          {match[6]}
+        </code>
+      );
+    }
+
     lastIndex = regex.lastIndex;
   }
 
