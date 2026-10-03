@@ -25,9 +25,6 @@ export const Header: React.FC<HeaderProps> = ({
           <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#1c1917] group-hover:text-[#44403c] transition-colors">
             Nara Chronicle
           </span>
-          <span className="hidden sm:inline-block text-[11px] font-sans uppercase tracking-widest text-[#78716c]">
-            Jurnal AI & Manusia
-          </span>
         </button>
 
         {/* Desktop Quick Nav */}
