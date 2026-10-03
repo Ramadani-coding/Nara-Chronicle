@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getArticleBySlug, getArticles } from "@/lib/articles";
+import { getArticleBySlug, getArticles, getRelatedArticles } from "@/lib/articles";
 import { ArrowLeftIcon, UserIcon } from "@/components/Icons";
 import { ShareButton } from "@/components/ShareButton";
 
@@ -40,15 +40,8 @@ export default async function ArticleDetailPage({
     notFound();
   }
 
-  // Related articles
-  const allArticles = await getArticles();
-  const otherArticles = allArticles.filter(
-    (a) => a.id !== article.id && a.category === article.category
-  ).slice(0, 2);
-
-  const fallbackArticles = otherArticles.length > 0 
-    ? otherArticles 
-    : allArticles.filter((a) => a.id !== article.id).slice(0, 2);
+  // Related articles (fast targeted query, no heavy content payload)
+  const relatedArticles = await getRelatedArticles(article.id, article.category);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#faf9f5] text-[#1c1917] selection:bg-[#eae5d9]">
@@ -143,10 +136,11 @@ export default async function ArticleDetailPage({
             Catatan Lainnya
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {fallbackArticles.map((item) => (
+            {relatedArticles.map((item) => (
               <Link
                 key={item.id}
                 href={`/article/${item.slug}`}
+                prefetch={true}
                 className="group p-5 rounded-xl border border-[#eae5d9] bg-[#fdfcf9] hover:border-[#1c1917] transition-all flex flex-col justify-between"
               >
                 <div>
@@ -174,7 +168,7 @@ export default async function ArticleDetailPage({
             <span>·</span>
             <span>Jurnal Terbuka 2026</span>
           </div>
-          <Link href="/" className="hover:text-[#1c1917] transition-colors">
+          <Link href="/" prefetch={true} className="hover:text-[#1c1917] transition-colors">
             Kembali ke Beranda
           </Link>
         </div>

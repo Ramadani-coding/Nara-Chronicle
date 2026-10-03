@@ -65,7 +65,7 @@ export const ArticleList: React.FC<ArticleListProps> = ({
         <div className="divide-y divide-[#eae5d9]">
           {articles.map((item) => (
             <article key={item.id} className="py-6 sm:py-8 group">
-              <Link href={`/article/${item.slug}`} className="block">
+              <Link href={`/article/${item.slug}`} prefetch={true} className="block">
                 <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
                   <div className="flex flex-wrap items-center gap-2 text-xs font-sans text-[#78716c]">
                     <time dateTime={item.date}>{item.date}</time>

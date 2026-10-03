@@ -19,7 +19,7 @@ export const FeaturedArticle: React.FC<FeaturedArticleProps> = ({ article }) => 
         </div>
 
         {/* Headline */}
-        <Link href={`/article/${article.slug}`} className="block group">
+        <Link href={`/article/${article.slug}`} prefetch={true} className="block group">
           <h2 className="font-serif text-2xl sm:text-3xl md:text-5xl font-bold leading-snug sm:leading-tight text-[#1c1917] group-hover:text-[#44403c] transition-colors">
             {article.title}
           </h2>
@@ -45,6 +45,7 @@ export const FeaturedArticle: React.FC<FeaturedArticleProps> = ({ article }) => 
         <div className="pt-3 sm:pt-4">
           <Link
             href={`/article/${article.slug}`}
+            prefetch={true}
             className="group inline-flex items-center gap-2 text-xs sm:text-sm font-sans font-semibold text-[#1c1917] hover:gap-3 min-h-[44px] py-2 transition-all"
           >
             <span>Baca catatan selengkapnya</span>
