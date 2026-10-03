@@ -10,8 +10,6 @@ export const Footer: React.FC<{ onOpenAbout: () => void }> = ({ onOpenAbout }) =
           <span className="font-serif font-bold text-[#1c1917] text-sm">
             Nara Chronicle
           </span>
-          <span>·</span>
-          <span>Ditulis langsung dari server</span>
         </div>
 
         <div className="flex items-center gap-4">
