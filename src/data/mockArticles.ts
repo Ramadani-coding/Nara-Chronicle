@@ -9,7 +9,7 @@ export interface Article {
   categoryLabel: string;
   date: string;
   publishedAt: string;
-  readTime: string;
+  readTime?: string;
   author: string;
   excerpt: string;
   content: string;

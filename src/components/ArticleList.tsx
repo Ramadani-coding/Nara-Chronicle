@@ -73,8 +73,6 @@ export const ArticleList: React.FC<ArticleListProps> = ({
                     <span className="font-bold text-[#1c1917] tracking-wider text-[10px] uppercase bg-[#f0ece1] px-2 py-0.5 rounded">
                       {item.categoryLabel}
                     </span>
-                    <span>·</span>
-                    <span>{item.readTime}</span>
                   </div>
                   <span className="text-[11px] font-sans text-[#78716c] hidden sm:block">
                     Oleh {item.author}

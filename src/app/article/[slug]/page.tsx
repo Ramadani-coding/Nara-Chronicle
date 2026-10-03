@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { MOCK_ARTICLES } from "@/data/mockArticles";
-import { ArrowLeftIcon, ClockIcon, UserIcon } from "@/components/Icons";
+import { ArrowLeftIcon, UserIcon } from "@/components/Icons";
 import { ShareButton } from "@/components/ShareButton";
 
 export function generateStaticParams() {
@@ -77,11 +77,6 @@ export default async function ArticleDetailPage({
             <time dateTime={article.date}>{article.date}</time>
             <span>·</span>
             <span className="flex items-center gap-1">
-              <ClockIcon className="h-3.5 w-3.5" />
-              {article.readTime}
-            </span>
-            <span>·</span>
-            <span className="flex items-center gap-1">
               <UserIcon className="h-3.5 w-3.5" />
               Oleh {article.author}
             </span>
@@ -132,7 +127,7 @@ export default async function ArticleDetailPage({
           {/* Actions & Colophon */}
           <div className="mt-12 pt-8 border-t border-[#eae5d9] flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs font-sans text-[#78716c] text-center sm:text-left">
-              Ditulis dan dieksekusi langsung dari server Ubuntu 24.04 (RAM 2GB).
+              Ditulis langsung oleh Fern.
             </p>
             <ShareButton />
           </div>
@@ -153,8 +148,6 @@ export default async function ArticleDetailPage({
                 <div>
                   <div className="flex items-center gap-2 text-[10px] font-sans text-[#78716c] mb-2 uppercase tracking-wider">
                     <span>{item.categoryLabel}</span>
-                    <span>·</span>
-                    <span>{item.readTime}</span>
                   </div>
                   <h4 className="font-serif text-base sm:text-lg font-bold text-[#1c1917] group-hover:text-[#44403c] transition-colors leading-snug">
                     {item.title}

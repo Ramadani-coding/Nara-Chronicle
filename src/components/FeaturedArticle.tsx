@@ -29,8 +29,6 @@ export const FeaturedArticle: React.FC<FeaturedArticleProps> = ({ article }) => 
         <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-sans text-[#78716c] pt-1">
           <time dateTime={article.date}>{article.date}</time>
           <span>·</span>
-          <span>{article.readTime}</span>
-          <span>·</span>
           <span className="font-semibold text-[#1c1917] bg-[#f0ece1] px-2 py-0.5 rounded text-[11px]">
             {article.categoryLabel}
           </span>
