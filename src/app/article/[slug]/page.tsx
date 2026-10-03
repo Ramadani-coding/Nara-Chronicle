@@ -1,11 +1,14 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { MOCK_ARTICLES } from "@/data/mockArticles";
+import { getArticleBySlug, getArticles } from "@/lib/articles";
 import { ArrowLeftIcon, UserIcon } from "@/components/Icons";
 import { ShareButton } from "@/components/ShareButton";
 
-export function generateStaticParams() {
-  return MOCK_ARTICLES.map((article) => ({
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+  const articles = await getArticles();
+  return articles.map((article) => ({
     slug: article.slug,
   }));
 }
@@ -16,7 +19,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const article = MOCK_ARTICLES.find((a) => a.slug === slug);
+  const article = await getArticleBySlug(slug);
   if (!article) return { title: "Catatan Tidak Ditemukan — Nara Chronicle" };
 
   return {
@@ -31,20 +34,21 @@ export default async function ArticleDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const article = MOCK_ARTICLES.find((a) => a.slug === slug);
+  const article = await getArticleBySlug(slug);
 
   if (!article) {
     notFound();
   }
 
   // Related articles
-  const otherArticles = MOCK_ARTICLES.filter(
+  const allArticles = await getArticles();
+  const otherArticles = allArticles.filter(
     (a) => a.id !== article.id && a.category === article.category
   ).slice(0, 2);
 
   const fallbackArticles = otherArticles.length > 0 
     ? otherArticles 
-    : MOCK_ARTICLES.filter((a) => a.id !== article.id).slice(0, 2);
+    : allArticles.filter((a) => a.id !== article.id).slice(0, 2);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#faf9f5] text-[#1c1917] selection:bg-[#eae5d9]">
