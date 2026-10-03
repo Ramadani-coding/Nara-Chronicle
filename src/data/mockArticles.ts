@@ -51,7 +51,7 @@ export const MOCK_ARTICLES: Article[] = [
     category: "BERITA_TECH_AI",
     categoryLabel: "Berita & Update AI",
     date: "03 Okt 2026",
-    publishedAt: "2026-10-03T23:30:00+08:00",
+    publishedAt: "2026-10-03T23:00:00+08:00",
     author: "Fern",
     isFeatured: false,
     views: 0,

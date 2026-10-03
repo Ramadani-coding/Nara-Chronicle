@@ -9,7 +9,8 @@ export function isRecentArticle(publishedAt: string): boolean {
     const pubTime = new Date(publishedAt).getTime();
     if (isNaN(pubTime)) return false;
     const diffHours = (Date.now() - pubTime) / (1000 * 60 * 60);
-    return diffHours >= 0 && diffHours < 24;
+    // Tolerant to clock drift / timezone skews, active for articles within recent window (~36 hours)
+    return diffHours >= -12 && diffHours < 36;
   } catch {
     return false;
   }
