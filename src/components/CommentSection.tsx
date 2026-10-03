@@ -126,7 +126,12 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
 
   const formatDate = (dateString: string) => {
     try {
-      const d = new Date(dateString);
+      // Normalize timestamp: if lacking timezone suffix (no 'Z' and no offset), treat as UTC
+      let normalized = dateString;
+      if (normalized && !normalized.endsWith("Z") && !/[+-]\d{2}:\d{2}$/.test(normalized)) {
+        normalized += "Z";
+      }
+      const d = new Date(normalized);
       return new Intl.DateTimeFormat("id-ID", {
         day: "numeric",
         month: "short",
