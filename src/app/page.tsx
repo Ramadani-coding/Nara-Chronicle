@@ -34,11 +34,10 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#faf9f5] text-[#1c1917] selection:bg-[#eae5d9]">
-      {/* 1. Responsive Header Navigation with Category Tabs */}
+      {/* 1. Clean Minimal Header (Brand + Links, NO category buttons) */}
       <Header
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
         onOpenAbout={() => setAboutOpen(true)}
+        onHomeClick={() => setActiveTab("ALL")}
       />
 
       <main className="flex-1 w-full overflow-hidden">
@@ -50,10 +49,11 @@ export default function HomePage() {
           />
         )}
 
-        {/* 3. Category Article List */}
+        {/* 3. Article List with In-Page Category Filter Tabs */}
         <ArticleList
           articles={listArticles}
           activeCategory={activeTab}
+          onSelectCategory={(cat) => setActiveTab(cat)}
           onRead={(art) => setSelectedArticle(art)}
         />
       </main>
