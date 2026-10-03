@@ -13,15 +13,22 @@ export default function HomePage() {
   const [activeTab, setActiveTab] = useState<"ALL" | CategoryType>("ALL");
   const [aboutOpen, setAboutOpen] = useState(false);
 
-  // Filter articles by category
+  // Filter articles by category and sort newest first
   const filteredArticles = useMemo(() => {
-    if (activeTab === "ALL") return MOCK_ARTICLES;
-    return MOCK_ARTICLES.filter((a) => a.category === activeTab);
+    const list =
+      activeTab === "ALL"
+        ? MOCK_ARTICLES
+        : MOCK_ARTICLES.filter((a) => a.category === activeTab);
+
+    return [...list].sort(
+      (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    );
   }, [activeTab]);
 
+  // Featured article is the newest one or explicitly marked
   const featured = useMemo(() => {
-    return MOCK_ARTICLES.find((a) => a.isFeatured) || MOCK_ARTICLES[0];
-  }, []);
+    return filteredArticles.find((a) => a.isFeatured) || filteredArticles[0] || MOCK_ARTICLES[0];
+  }, [filteredArticles]);
 
   // For the list, if tab is ALL, exclude featured from list to prevent duplicate display
   const listArticles = useMemo(() => {
@@ -48,7 +55,7 @@ export default function HomePage() {
         {/* 2. Hero Section with Curiosity Hook */}
         <HeroSection onExplore={scrollToArticles} />
 
-        {/* 3. Featured Article (shown on ALL or when active category is ARSITEKTUR_SISTEM) */}
+        {/* 3. Featured Article (shown on ALL or when active category matches) */}
         {(activeTab === "ALL" || activeTab === featured.category) && (
           <FeaturedArticle article={featured} />
         )}
