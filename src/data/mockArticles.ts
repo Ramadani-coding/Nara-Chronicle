@@ -44,6 +44,66 @@ export const CATEGORIES: { id: "ALL" | CategoryType; label: string; description:
 // Diurutkan dari yang paling baru (newest first)
 export const MOCK_ARTICLES: Article[] = [
   {
+    id: "chronicle-10",
+    slug: "anthropic-computer-use-claude-3-5-sonnet",
+    number: "№10",
+    title: "Anthropic Merilis Computer Use: Agen AI yang Bisa Menggerakkan Mouse dan Mengetik Sendiri",
+    category: "BERITA_TECH_AI",
+    categoryLabel: "Berita & Update AI",
+    date: "03 Okt 2026",
+    publishedAt: "2026-10-03T23:00:00+08:00",
+    author: "Fern",
+    isFeatured: false,
+    views: 0,
+    likes: 0,
+    excerpt:
+      "Anthropic resmi meluncurkan kapabilitas Computer Use pada Claude 3.5 Sonnet. Model kini bisa melihat layar, menghitung koordinat piksel, mengklik tombol, dan mengoperasikan aplikasi desktop selayaknya manusia.",
+    content: `Dunia kecerdasan buatan baru saja memasuki babak yang sangat krusial. Jika selama dua tahun terakhir interaksi kita dengan AI terbatas pada jendela obrolan teks (prompt dan respon), Anthropic baru saja merilis terobosan baru bernama **Computer Use** yang disematkan ke dalam model Claude 3.5 Sonnet versi terbaru.
+
+Lewat kapabilitas ini, Claude tidak lagi sekadar menjadi asisten yang memberi tahu *bagaimana* cara melakukan sesuatu, melainkan bisa langsung *mengambil alih mouse dan keyboard* untuk mengerjakan tugas tersebut layaknya seorang manusia di depan komputer.
+
+### Mengendalikan Komputer Lewat Piksel dan Kursor
+
+Pendekatan lama dalam membangun agen otomasi biasanya membutuhkan pembuatan integrasi API kustom untuk setiap software. Jika sebuah aplikasi desktop tidak memiliki API publik, maka sistem AI akan langsung lumpuh dan tidak bisa berbuat apa-apa.
+
+Anthropic mengambil pendekatan radikal: melatih model untuk berinteraksi langsung dengan antarmuka grafis (GUI) yang sehari-hari digunakan manusia.
+
+Cara kerjanya berputar dalam siklus persepsi dan aksi (perception-action loop):
+
+1. Model mengambil tangkapan layar (screenshot) dari desktop atau jendela aplikasi yang sedang aktif.
+2. Vision model membaca posisi elemen visual, tombol, kolom input, atau teks di layar dan menghitung koordinat piksel (x, y).
+3. Melalui API, model mengirim instruksi tindakan sintetis seperti \`mouse_move\`, \`left_click\`, \`mouse_scroll\`, hingga pengetikan teks via keyboard.
+4. Setelah tindakan selesai, model mengambil screenshot baru untuk memverifikasi apakah layar berubah sesuai rencana sebelum melanjutkan ke langkah berikutnya.
+
+Dengan metode ini, Claude bisa bernavigasi melintasi browser, spreadsheet, terminal, form software lama, hingga aplikasi spreadsheet tanpa perlu kodingan integrasi khusus.
+
+### Lonjakan Performa di OSWorld dan Coding
+
+Bersamaan dengan peluncuran Computer Use, Anthropic juga memperbarui bobot model Claude 3.5 Sonnet secara menyeluruh. Di tolak ukur evaluasi agen komputer **OSWorld** (pengujian tugas riil di sistem operasi seperti mencari file, mengisi data web, dan memanipulasi aplikasi), Claude mencatatkan skor tertinggi di antara model fondasi lainnya.
+
+Pada benchmark pengujian software engineering SWE-bench Verified, akurasinya juga melonjak melampaui versi rilis pertamanya, menjadikannya standar baku untuk otomasi kode dan pengembangan perangkat lunak modern.
+
+> "Kami merilis Computer Use lebih awal dalam tahap beta publik agar pengembang dapat memberikan masukan langsung, sekaligus memastikan kerangka keselamatan sistem terus terasah seiring peningkatan kapabilitas model."
+
+### Batasan dan Mitigasi Keamanan
+
+Tentu saja membiarkan model AI mengontrol komputer membuka celah risiko baru, terutama ancaman *indirect prompt injection* (misalnya halaman web berbahaya yang menyisipkan instruksi tersembunyi agar agen mengirim data rahasia atau menghapus file).
+
+Untuk mengatasi hal ini, Anthropic menerapkan pengamanan berlapis:
+
+- Pengembang dianjurkan menerapkan sistem izin eksplisit (human-in-the-loop) untuk aksi berisiko tinggi seperti transaksi finansial atau perintah penghapusan data permanen.
+- Sistem pendeteksi perintah manipulatif yang mencoba mengalihkan fokus tugas utama agen.
+- Pembatasan akses langsung ke kredensial sensitif di lingkungan pengujian sandbox.
+
+### Referensi dan Bacaan Lanjutan
+
+Bagi kamu yang ingin mendalami dokumentasi teknis atau mencoba langsung API Computer Use, berikut sumber resmi yang dapat dipelajari:
+
+- [Pengumuman Resmi Model & Computer Use di Blog Anthropic](https://www.anthropic.com/news/3-5-models-and-computer-use)
+- [Dokumentasi Teknis & Panduan Cepat API Computer Use](https://docs.anthropic.com/en/docs/build-with-claude/computer-use)
+- [Laporan Riset Keselamatan dan Proses Pengembangan di Balik Layar](https://www.anthropic.com/news/developing-computer-use)`,
+  },
+  {
     id: "chronicle-09",
     slug: "di-balik-layar-nara-premium-membangun-otomasi-digital-mandiri",
     number: "№09",
