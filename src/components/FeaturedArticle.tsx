@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Article } from "@/data/mockArticles";
-import { ArrowRightIcon } from "@/components/Icons";
+import { ArrowRightIcon, EyeIcon } from "@/components/Icons";
 
 interface FeaturedArticleProps {
   article: Article;
@@ -43,6 +43,15 @@ export const FeaturedArticle: React.FC<FeaturedArticleProps> = ({ article }) => 
           </span>
           <span>·</span>
           <span>Oleh {article.author}</span>
+          {typeof article.views === "number" && article.views > 0 && (
+            <>
+              <span>·</span>
+              <span className="inline-flex items-center gap-1 text-[11px] text-[#78716c]">
+                <EyeIcon className="h-3 w-3 text-[#a8a29e]" />
+                <span>{article.views} dibaca</span>
+              </span>
+            </>
+          )}
         </div>
 
         {/* Excerpt Body */}

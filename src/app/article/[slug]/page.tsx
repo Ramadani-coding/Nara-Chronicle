@@ -7,6 +7,7 @@ import { BackButton } from "@/components/BackButton";
 import { LikeButton } from "@/components/LikeButton";
 import { ReadingProgressBar } from "@/components/ReadingProgressBar";
 import { CommentSection } from "@/components/CommentSection";
+import { ViewCounter } from "@/components/ViewCounter";
 
 export const revalidate = 60;
 
@@ -79,6 +80,8 @@ export default async function ArticleDetailPage({
               <UserIcon className="h-3.5 w-3.5" />
               Oleh {article.author}
             </span>
+            <span>·</span>
+            <ViewCounter slug={article.slug} initialViews={article.views || 0} trackView={true} />
           </div>
 
           {/* Headline Title */}

@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { Article, CATEGORIES, CategoryType } from "@/data/mockArticles";
-import { SearchIcon, XIcon } from "./Icons";
+import { SearchIcon, XIcon, EyeIcon } from "./Icons";
 
 interface ArticleListProps {
   articles: Article[];
@@ -152,6 +152,15 @@ export const ArticleList: React.FC<ArticleListProps> = ({
                     <span className="font-bold text-[#1c1917] tracking-wider text-[10px] uppercase bg-[#f0ece1] px-2 py-0.5 rounded">
                       {item.categoryLabel}
                     </span>
+                    {typeof item.views === "number" && item.views > 0 && (
+                      <>
+                        <span>·</span>
+                        <span className="inline-flex items-center gap-1 text-[11px] text-[#78716c]">
+                          <EyeIcon className="h-3 w-3 text-[#a8a29e]" />
+                          <span>{item.views}</span>
+                        </span>
+                      </>
+                    )}
                   </div>
                   <span className="text-[11px] font-sans text-[#78716c] hidden sm:block">
                     Oleh {item.author}

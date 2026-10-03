@@ -23,6 +23,7 @@ model Article {
   content       String   @db.Text
   isFeatured    Boolean   @default(false)
   likes         Int       @default(0)
+  views         Int       @default(0)
   comments      Comment[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
