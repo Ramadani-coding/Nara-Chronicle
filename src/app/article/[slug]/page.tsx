@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { MOCK_ARTICLES } from "@/data/mockArticles";
-import { ArrowLeft, Clock, User } from "lucide-react";
+import { ArrowLeftIcon, ClockIcon, UserIcon } from "@/components/Icons";
 import { ShareButton } from "@/components/ShareButton";
 
 export function generateStaticParams() {
@@ -55,7 +55,7 @@ export default async function ArticleDetailPage({
             href="/"
             className="group inline-flex items-center gap-2 text-xs font-sans font-medium text-[#78716c] hover:text-[#1c1917] transition-colors min-h-[44px]"
           >
-            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+            <ArrowLeftIcon className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
             <span>Kembali ke semua catatan</span>
           </Link>
 
@@ -77,12 +77,12 @@ export default async function ArticleDetailPage({
             <time dateTime={article.date}>{article.date}</time>
             <span>·</span>
             <span className="flex items-center gap-1">
-              <Clock className="h-3.5 w-3.5" />
+              <ClockIcon className="h-3.5 w-3.5" />
               {article.readTime}
             </span>
             <span>·</span>
             <span className="flex items-center gap-1">
-              <User className="h-3.5 w-3.5" />
+              <UserIcon className="h-3.5 w-3.5" />
               Oleh {article.author}
             </span>
           </div>

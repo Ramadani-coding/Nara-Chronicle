@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Info, ExternalLink, Menu, X } from "lucide-react";
+import { InfoIcon, ExternalLinkIcon, MenuIcon, XIcon } from "@/components/Icons";
 
 interface HeaderProps {
   onOpenAbout: () => void;
@@ -33,7 +33,7 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={onOpenAbout}
             className="flex items-center gap-1.5 py-1.5 hover:text-[#1c1917] transition-colors"
           >
-            <Info className="h-3.5 w-3.5" />
+            <InfoIcon className="h-3.5 w-3.5" />
             <span>Tentang</span>
           </button>
           <a
@@ -42,7 +42,7 @@ export const Header: React.FC<HeaderProps> = ({
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 py-1.5 hover:text-[#1c1917] transition-colors"
           >
-            <ExternalLink className="h-3.5 w-3.5" />
+            <ExternalLinkIcon className="h-3.5 w-3.5" />
             <span>GitHub</span>
           </a>
         </nav>
@@ -54,7 +54,7 @@ export const Header: React.FC<HeaderProps> = ({
             className="w-11 h-11 flex items-center justify-center rounded-lg text-[#1c1917] hover:bg-[#eae5d9] transition-colors"
             aria-label="Menu navigasi"
           >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileMenuOpen ? <XIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
           </button>
         </div>
       </div>
@@ -69,7 +69,7 @@ export const Header: React.FC<HeaderProps> = ({
             }}
             className="w-full text-left py-2.5 px-3 min-h-[44px] flex items-center gap-2 hover:bg-[#eae5d9] rounded-lg font-medium text-[#1c1917]"
           >
-            <Info className="h-4 w-4" />
+            <InfoIcon className="h-4 w-4" />
             <span>Tentang Nara Chronicle</span>
           </button>
           <a
@@ -78,7 +78,7 @@ export const Header: React.FC<HeaderProps> = ({
             rel="noopener noreferrer"
             className="w-full text-left py-2.5 px-3 min-h-[44px] flex items-center gap-2 hover:bg-[#eae5d9] rounded-lg font-medium text-[#1c1917]"
           >
-            <ExternalLink className="h-4 w-4" />
+            <ExternalLinkIcon className="h-4 w-4" />
             <span>GitHub Repositori</span>
           </a>
         </div>

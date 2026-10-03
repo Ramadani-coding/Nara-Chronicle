@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Share2, Check } from "lucide-react";
+import { Share2Icon, CheckIcon } from "@/components/Icons";
 
 export const ShareButton: React.FC = () => {
   const [copied, setCopied] = useState(false);
@@ -22,12 +22,12 @@ export const ShareButton: React.FC = () => {
     >
       {copied ? (
         <>
-          <Check className="h-3.5 w-3.5 text-emerald-600" />
+          <CheckIcon className="h-3.5 w-3.5 text-emerald-600" />
           <span className="text-emerald-700 font-semibold">Tautan tersalin</span>
         </>
       ) : (
         <>
-          <Share2 className="h-3.5 w-3.5" />
+          <Share2Icon className="h-3.5 w-3.5" />
           <span>Bagikan catatan</span>
         </>
       )}

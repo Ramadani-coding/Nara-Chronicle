@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Article } from "@/data/mockArticles";
-import { ArrowRight } from "lucide-react";
+import { ArrowRightIcon } from "@/components/Icons";
 
 interface FeaturedArticleProps {
   article: Article;
@@ -50,7 +50,7 @@ export const FeaturedArticle: React.FC<FeaturedArticleProps> = ({ article }) => 
             className="group inline-flex items-center gap-2 text-xs sm:text-sm font-sans font-semibold text-[#1c1917] hover:gap-3 min-h-[44px] py-2 transition-all"
           >
             <span>Baca catatan selengkapnya</span>
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
       </div>

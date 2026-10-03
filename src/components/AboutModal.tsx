@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { X } from "lucide-react";
+import { XIcon } from "@/components/Icons";
 
 interface AboutModalProps {
   isOpen: boolean;
@@ -23,7 +23,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
             className="w-11 h-11 flex items-center justify-center rounded-full text-[#78716c] hover:bg-[#eae5d9] hover:text-[#1c1917] transition-colors shrink-0"
             aria-label="Tutup tentang"
           >
-            <X className="h-5 w-5" />
+            <XIcon className="h-5 w-5" />
           </button>
         </div>
 
