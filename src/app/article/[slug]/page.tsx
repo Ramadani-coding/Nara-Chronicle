@@ -4,6 +4,7 @@ import { getArticleBySlug, getArticles, getRelatedArticles } from "@/lib/article
 import { UserIcon } from "@/components/Icons";
 import { ShareButton } from "@/components/ShareButton";
 import { BackButton } from "@/components/BackButton";
+import { LikeButton } from "@/components/LikeButton";
 
 export const revalidate = 60;
 
@@ -121,7 +122,10 @@ export default async function ArticleDetailPage({
             <p className="text-xs font-sans text-[#78716c] text-center sm:text-left">
               Ditulis langsung oleh Fern.
             </p>
-            <ShareButton />
+            <div className="flex items-center gap-3">
+              <LikeButton slug={article.slug} initialLikes={article.likes || 0} />
+              <ShareButton />
+            </div>
           </div>
         </article>
 

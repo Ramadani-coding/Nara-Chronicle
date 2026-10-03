@@ -26,6 +26,7 @@ export const getArticles = cache(async (): Promise<Article[]> => {
         excerpt: a.excerpt,
         content: a.content,
         isFeatured: a.isFeatured,
+        likes: a.likes,
       }));
     }
   } catch (err) {
@@ -56,6 +57,7 @@ export const getArticleBySlug = cache(async (slug: string): Promise<Article | nu
         excerpt: a.excerpt,
         content: a.content,
         isFeatured: a.isFeatured,
+        likes: a.likes,
       };
     }
   } catch (err) {

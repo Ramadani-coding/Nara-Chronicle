@@ -14,6 +14,7 @@ export interface Article {
   excerpt: string;
   content: string;
   isFeatured?: boolean;
+  likes?: number;
 }
 
 export const CATEGORIES: { id: "ALL" | CategoryType; label: string; description: string }[] = [
