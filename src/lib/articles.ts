@@ -117,3 +117,40 @@ export const getRelatedArticles = cache(
     ).slice(0, 2);
   }
 );
+
+export interface CommentItem {
+  id: string;
+  articleId: string;
+  author: string;
+  content: string;
+  createdAt: string;
+}
+
+export const getCommentsByArticleSlug = cache(
+  async (slug: string): Promise<CommentItem[]> => {
+    try {
+      const article = await prisma.article.findUnique({
+        where: { slug },
+        select: { id: true },
+      });
+      if (!article) return [];
+
+      const comments = await prisma.comment.findMany({
+        where: { articleId: article.id },
+        orderBy: { createdAt: "desc" },
+        take: 50,
+      });
+
+      return comments.map((c) => ({
+        id: c.id,
+        articleId: c.articleId,
+        author: c.author,
+        content: c.content,
+        createdAt: c.createdAt.toISOString(),
+      }));
+    } catch (err) {
+      console.error("Prisma getCommentsByArticleSlug failed:", err);
+      return [];
+    }
+  }
+);

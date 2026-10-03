@@ -21,12 +21,25 @@ model Article {
   author        String   @default("Fern")
   excerpt       String
   content       String   @db.Text
-  isFeatured    Boolean  @default(false)
-  likes         Int      @default(0)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  isFeatured    Boolean   @default(false)
+  likes         Int       @default(0)
+  comments      Comment[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   @@index([slug])
   @@index([category])
   @@index([publishedAt])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  articleId String
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  author    String   @default("Anonim")
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+
+  @@index([articleId])
+  @@index([createdAt])
 }

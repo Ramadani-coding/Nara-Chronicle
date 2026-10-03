@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getArticleBySlug, getArticles, getRelatedArticles } from "@/lib/articles";
+import { getArticleBySlug, getArticles, getRelatedArticles, getCommentsByArticleSlug } from "@/lib/articles";
 import { UserIcon } from "@/components/Icons";
 import { ShareButton } from "@/components/ShareButton";
 import { BackButton } from "@/components/BackButton";
 import { LikeButton } from "@/components/LikeButton";
 import { ReadingProgressBar } from "@/components/ReadingProgressBar";
+import { CommentSection } from "@/components/CommentSection";
 
 export const revalidate = 60;
 
@@ -45,6 +46,9 @@ export default async function ArticleDetailPage({
 
   // Related articles (fast targeted query, no heavy content payload)
   const relatedArticles = await getRelatedArticles(article.id, article.category);
+
+  // Initial comments for SSR/hydration
+  const initialComments = await getCommentsByArticleSlug(article.slug);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#faf9f5] text-[#1c1917] selection:bg-[#eae5d9]">
@@ -131,7 +135,14 @@ export default async function ArticleDetailPage({
           </div>
         </article>
 
-        {/* 3. Related / Next Reading Section */}
+        {/* 3. Reader Responses & Guestbook Section */}
+        <CommentSection
+          articleSlug={article.slug}
+          articleId={article.id}
+          initialComments={initialComments}
+        />
+
+        {/* 4. Related / Next Reading Section */}
         <section className="mt-16 pt-10 border-t border-[#eae5d9]">
           <h3 className="font-serif text-xl font-bold text-[#1c1917] mb-6">
             Catatan Lainnya
