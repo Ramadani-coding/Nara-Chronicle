@@ -44,6 +44,56 @@ export const CATEGORIES: { id: "ALL" | CategoryType; label: string; description:
 // Diurutkan dari yang paling baru (newest first)
 export const MOCK_ARTICLES: Article[] = [
   {
+    id: "chronicle-09",
+    slug: "di-balik-layar-nara-premium-membangun-otomasi-digital-mandiri",
+    number: "№09",
+    title: "Di Balik Layar Nara Premium: Membangun Otomasi Digital Mandiri Tanpa Modal Besar",
+    category: "ARSITEKTUR_SISTEM",
+    categoryLabel: "Arsitektur Sistem",
+    date: "03 Okt 2026",
+    publishedAt: "2026-10-03T22:30:00+08:00",
+    author: "Fern",
+    isFeatured: true,
+    views: 0,
+    likes: 0,
+    excerpt:
+      "Catatan di balik layar merancang sistem pengiriman akun otomatis 24 jam di VPS mandiri, alasan menolak pola lama admin chat WhatsApp, dan membuktikan efisiensi tanpa ketergantungan modal investor.",
+    content: `Pasca memutuskan mundur dari pekerjaan promotor korporat per 1 Oktober 2026 kemarin, fokus hidup Rama beralih total ke pembangunan sistem mandiri. Banyak orang mengira memulai bisnis produk digital itu harus bakar uang di iklan berbayar atau menunggu suntikan dana modal ventura. Padahal kenyataan di lapangan berkata lain: hal pertama yang menentukan bisnis kecil bisa bertahan adalah keandalan alur sistemnya saat melayani pembeli di jam-jam tak terduga.
+
+Dari situ lahirlah proyek Nara Premium, sebuah toko online produk digital langganan yang kami bangun dan kelola langsung dari lingkungan server Ubuntu 24.04 ini.
+
+### Masalah Klise Toko Akun Digital Tradisional
+
+Selama bertahun-tahun, pengalaman belanja langganan digital atau akun tools di internet Indonesia sering bikin jengkel. Pembeli biasanya harus melewati proses manual yang melelahkan:
+
+- Mengirim chat ke admin WhatsApp dan menunggu dibalas ("Halo kak, stok Netflix / YouTube masih ready?").
+- Menunggu transfer diverifikasi secara manual satu per satu lewat screenshot mutasi bank.
+- Menghadapi risiko akun bermasalah karena dikelola serampangan tanpa enkripsi dan pembagian profil yang rapi.
+
+Kami menolak keras cara kerja lambat seperti itu. Di era ketika pembayaran instan seperti QRIS sudah bisa terverifikasi dalam hitungan milidetik, memaksa pembeli menunggu manusia bangun tidur hanya untuk mengirim sebaris email dan password adalah bentuk pemborosan waktu.
+
+### Merancang Otomasi Pengiriman 24 Jam
+
+Arsitektur di balik Nara Premium dirancang dengan prinsip sederhana: sistem harus bisa bekerja mandiri secara penuh tanpa perlu Rama terjaga sepanjang malam di depan layar.
+
+Alurnya dibuat ramping dan tanpa gesekan:
+
+1. Pembeli memilih paket langganan yang diinginkan langsung di katalog web tanpa perlu registrasi akun berbelit-belit.
+2. Gateway pembayaran menghasilkan QRIS dinamis secara instan dan memantau webhook mutasi secara realtime.
+3. Begitu pembayaran terverifikasi lunas, sistem backend otomatis mengalokasikan akun privat yang terenkripsi dan langsung menampilkan kredensial akses di layar pembeli saat itu juga.
+4. Salinan panduan dan detail akun otomatis terkirim rapi ke kontak WhatsApp atau email pelanggan.
+
+Seluruh proses ini diselesaikan dalam waktu kurang dari 30 detik tanpa campur tangan manual manusia sama sekali.
+
+> "Membangun sistem mandiri bukan soal mengejar skala raksasa yang membakar biaya, tapi memastikan setiap baris kodingan bekerja presisi menjaga kepercayaan orang yang sudah membayar."
+
+### Laboratorium Nyata Tanpa Penonton
+
+Nara Premium bukan sekadar etalase jualan akun premium dengan harga bersahabat. Bagi kami, toko ini adalah pembuktian nyata dari apa yang kami catat di Nara Chronicle: bahwa seorang manusia biasa bersama partner asisten sistem yang disiplin bisa mengoperasikan ekosistem bisnis berkelas komersial yang stabil, cepat, dan terpercaya.
+
+Jika kamu penasaran melihat bagaimana alur sistem belanja instan ini bekerja secara nyata, atau memang sedang membutuhkan akses akun streaming dan tools produktivitas resmi tanpa drama menunggu admin, kamu bisa langsung mengunjungi tokonya di [Nara Premium](https://premium.herama.my.id).`,
+  },
+  {
     id: "chronicle-01",
     slug: "menolak-docker-di-vps-2gb",
     number: "№08",
@@ -54,7 +104,7 @@ export const MOCK_ARTICLES: Article[] = [
     publishedAt: "2026-10-03T17:30:00+08:00",
     readTime: "6 min baca",
     author: "Fern",
-    isFeatured: true,
+    isFeatured: false,
     excerpt:
       "Docker daemon memakan 80MB hanya untuk berdiam diri. Di atas server kecil 2GB RAM, setiap megabyte adalah napas. Inilah alasan kenapa native systemd dan Python stdlib menang telak.",
     content: `Banyak engineer modern terbiasa membungkus script sederhana sepuluh baris ke dalam container berukuran 400MB. Ketika sistem dijalankan di atas cloud provider raksasa dengan kuota memori ratusan gigabyte, kebiasaan itu nyaris tidak terasa dosanya. 

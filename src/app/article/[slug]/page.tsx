@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getArticleBySlug, getArticles, getRelatedArticles, getCommentsByArticleSlug } from "@/lib/articles";
-import { UserIcon } from "@/components/Icons";
+import { UserIcon, ExternalLinkIcon } from "@/components/Icons";
 import { ShareButton } from "@/components/ShareButton";
 import { BackButton } from "@/components/BackButton";
 import { LikeButton } from "@/components/LikeButton";
@@ -31,6 +31,42 @@ export async function generateMetadata({
     title: `${article.title} — Nara Chronicle`,
     description: article.excerpt,
   };
+}
+
+function renderFormattedParagraph(text: string): React.ReactNode {
+  const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const elements: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      elements.push(text.slice(lastIndex, match.index));
+    }
+    const label = match[1];
+    const href = match[2];
+    const isExternal = href.startsWith("http");
+
+    elements.push(
+      <a
+        key={match.index}
+        href={href}
+        target={isExternal ? "_blank" : undefined}
+        rel={isExternal ? "noopener noreferrer" : undefined}
+        className="font-semibold text-[#1c1917] underline decoration-[#a8a29e] hover:decoration-[#1c1917] transition-all inline-flex items-center gap-0.5"
+      >
+        <span>{label}</span>
+        {isExternal && <ExternalLinkIcon className="h-3 w-3 inline text-[#78716c]" />}
+      </a>
+    );
+    lastIndex = regex.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    elements.push(text.slice(lastIndex));
+  }
+
+  return elements.length > 0 ? elements : text;
 }
 
 export default async function ArticleDetailPage({
@@ -113,14 +149,24 @@ export default async function ArticleDetailPage({
                 return (
                   <div key={idx} className="pl-4 border-l border-[#d6d3d1] space-y-1 text-base text-[#44403c]">
                     {para.split("\n").map((line, lIdx) => (
-                      <p key={lIdx}>{line}</p>
+                      <p key={lIdx}>{renderFormattedParagraph(line)}</p>
                     ))}
                   </div>
                 );
               }
+              if (para.startsWith("> ")) {
+                return (
+                  <blockquote
+                    key={idx}
+                    className="p-4 sm:p-5 rounded-xl border border-[#eae5d9] bg-[#f7f5ed] font-serif text-[#44403c] italic my-4 leading-relaxed"
+                  >
+                    {renderFormattedParagraph(para.replace(/^>\s*/, ""))}
+                  </blockquote>
+                );
+              }
               return (
                 <p key={idx} className="text-justify sm:text-left">
-                  {para}
+                  {renderFormattedParagraph(para)}
                 </p>
               );
             })}
