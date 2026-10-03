@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getArticleBySlug, getArticles, getRelatedArticles } from "@/lib/articles";
-import { ArrowLeftIcon, UserIcon } from "@/components/Icons";
+import { UserIcon } from "@/components/Icons";
 import { ShareButton } from "@/components/ShareButton";
+import { BackButton } from "@/components/BackButton";
 
 export const revalidate = 60;
 
@@ -48,15 +49,9 @@ export default async function ArticleDetailPage({
       {/* 1. Detail Page Minimal Sticky Header */}
       <header className="w-full border-b border-[#eae5d9] bg-[#faf9f5]/90 backdrop-blur-sm sticky top-0 z-40">
         <div className="mx-auto flex max-w-3xl items-center justify-between px-4 sm:px-6 py-4">
-          <Link
-            href="/"
-            className="group inline-flex items-center gap-2 text-xs font-sans font-medium text-[#78716c] hover:text-[#1c1917] transition-colors min-h-[44px]"
-          >
-            <ArrowLeftIcon className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-            <span>Kembali ke semua catatan</span>
-          </Link>
+          <BackButton />
 
-          <Link href="/" className="font-serif text-lg font-bold tracking-tight text-[#1c1917]">
+          <Link href="/" prefetch={true} className="font-serif text-lg font-bold tracking-tight text-[#1c1917]">
             Nara Chronicle
           </Link>
         </div>

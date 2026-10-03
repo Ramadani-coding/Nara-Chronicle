@@ -19,7 +19,16 @@ export const FeaturedArticle: React.FC<FeaturedArticleProps> = ({ article }) => 
         </div>
 
         {/* Headline */}
-        <Link href={`/article/${article.slug}`} prefetch={true} className="block group">
+        <Link
+          href={`/article/${article.slug}`}
+          prefetch={true}
+          onClick={() => {
+            if (typeof window !== "undefined") {
+              sessionStorage.setItem("chronicle_scroll_pos", window.scrollY.toString());
+            }
+          }}
+          className="block group"
+        >
           <h2 className="font-serif text-2xl sm:text-3xl md:text-5xl font-bold leading-snug sm:leading-tight text-[#1c1917] group-hover:text-[#44403c] transition-colors">
             {article.title}
           </h2>
@@ -46,6 +55,11 @@ export const FeaturedArticle: React.FC<FeaturedArticleProps> = ({ article }) => 
           <Link
             href={`/article/${article.slug}`}
             prefetch={true}
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                sessionStorage.setItem("chronicle_scroll_pos", window.scrollY.toString());
+              }
+            }}
             className="group inline-flex items-center gap-2 text-xs sm:text-sm font-sans font-semibold text-[#1c1917] hover:gap-3 min-h-[44px] py-2 transition-all"
           >
             <span>Baca catatan selengkapnya</span>

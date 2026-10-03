@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { HeroSection } from "@/components/HeroSection";
 import { FeaturedArticle } from "@/components/FeaturedArticle";
@@ -18,6 +18,26 @@ export const ChronicleHome: React.FC<ChronicleHomeProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<"ALL" | CategoryType>("ALL");
   const [aboutOpen, setAboutOpen] = useState(false);
+
+  // Restore scroll position when returning from reading an article
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const savedPos = sessionStorage.getItem("chronicle_scroll_pos");
+    if (savedPos !== null) {
+      const targetY = parseInt(savedPos, 10);
+      if (!isNaN(targetY)) {
+        // Fast instant scroll restoration
+        requestAnimationFrame(() => {
+          window.scrollTo({ top: targetY, behavior: "instant" });
+        });
+        const timer = setTimeout(() => {
+          window.scrollTo({ top: targetY, behavior: "instant" });
+          sessionStorage.removeItem("chronicle_scroll_pos");
+        }, 60);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, []);
 
   // Filter articles by category and sort newest first
   const filteredArticles = useMemo(() => {
