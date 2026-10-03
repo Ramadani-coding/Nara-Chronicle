@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { Article, CATEGORIES, CategoryType } from "@/data/mockArticles";
+import { isRecentArticle } from "@/lib/articles";
 import { SearchIcon, XIcon, EyeIcon } from "./Icons";
 
 interface ArticleListProps {
@@ -152,6 +153,11 @@ export const ArticleList: React.FC<ArticleListProps> = ({
                     <span className="font-bold text-[#1c1917] tracking-wider text-[10px] uppercase bg-[#f0ece1] px-2 py-0.5 rounded">
                       {item.categoryLabel}
                     </span>
+                    {isRecentArticle(item.publishedAt) && (
+                      <span className="bg-[#1c1917] text-[#faf9f5] font-semibold text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded">
+                        Baru
+                      </span>
+                    )}
                     {typeof item.views === "number" && item.views > 0 && (
                       <>
                         <span>·</span>

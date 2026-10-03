@@ -4,6 +4,17 @@ import { Article, MOCK_ARTICLES, CategoryType } from "@/data/mockArticles";
 
 export type ArticleSummary = Omit<Article, "content">;
 
+export function isRecentArticle(publishedAt: string): boolean {
+  try {
+    const pubTime = new Date(publishedAt).getTime();
+    if (isNaN(pubTime)) return false;
+    const diffHours = (Date.now() - pubTime) / (1000 * 60 * 60);
+    return diffHours >= 0 && diffHours < 24;
+  } catch {
+    return false;
+  }
+}
+
 // Deduplicate request queries across Server Components and metadata generators
 export const getArticles = cache(async (): Promise<Article[]> => {
   try {

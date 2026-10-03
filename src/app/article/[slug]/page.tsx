@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getArticleBySlug, getArticles, getRelatedArticles, getCommentsByArticleSlug } from "@/lib/articles";
+import { getArticleBySlug, getArticles, getRelatedArticles, getCommentsByArticleSlug, isRecentArticle } from "@/lib/articles";
 import { UserIcon, ExternalLinkIcon } from "@/components/Icons";
 import { ShareButton } from "@/components/ShareButton";
 import { BackButton } from "@/components/BackButton";
@@ -109,6 +109,11 @@ export default async function ArticleDetailPage({
             <span className="font-bold text-[#1c1917] tracking-wider text-[11px] uppercase bg-[#f0ece1] px-2.5 py-1 rounded">
               {article.categoryLabel}
             </span>
+            {isRecentArticle(article.publishedAt) && (
+              <span className="bg-[#1c1917] text-[#faf9f5] font-semibold text-[10px] uppercase tracking-wider px-2 py-0.5 rounded">
+                Baru
+              </span>
+            )}
             <span>·</span>
             <time dateTime={article.date}>{article.date}</time>
             <span>·</span>

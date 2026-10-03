@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Article } from "@/data/mockArticles";
+import { isRecentArticle } from "@/lib/articles";
 import { ArrowRightIcon, EyeIcon } from "@/components/Icons";
 
 interface FeaturedArticleProps {
@@ -16,6 +17,14 @@ export const FeaturedArticle: React.FC<FeaturedArticleProps> = ({ article }) => 
           <span>FEATURED</span>
           <span>·</span>
           <span>CHRONICLE {article.number || "№01"}</span>
+          {isRecentArticle(article.publishedAt) && (
+            <>
+              <span>·</span>
+              <span className="bg-[#1c1917] text-[#faf9f5] px-2 py-0.5 rounded text-[10px] tracking-wider font-semibold">
+                Baru
+              </span>
+            </>
+          )}
         </div>
 
         {/* Headline */}
