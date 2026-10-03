@@ -1,20 +1,19 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { Article, CATEGORIES, CategoryType } from "@/data/mockArticles";
 
 interface ArticleListProps {
   articles: Article[];
   activeCategory: "ALL" | CategoryType;
   onSelectCategory: (cat: "ALL" | CategoryType) => void;
-  onRead: (article: Article) => void;
 }
 
 export const ArticleList: React.FC<ArticleListProps> = ({
   articles,
   activeCategory,
   onSelectCategory,
-  onRead,
 }) => {
   const currentCategoryInfo = CATEGORIES.find((c) => c.id === activeCategory);
 
@@ -31,7 +30,7 @@ export const ArticleList: React.FC<ArticleListProps> = ({
           </span>
         </div>
 
-        {/* In-page Category Tabs (not in navbar!) */}
+        {/* In-page Category Tabs */}
         <div className="flex items-center gap-2 overflow-x-auto py-1 no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
           {CATEGORIES.map((cat) => {
             const isActive = activeCategory === cat.id;
@@ -65,33 +64,31 @@ export const ArticleList: React.FC<ArticleListProps> = ({
       ) : (
         <div className="divide-y divide-[#eae5d9]">
           {articles.map((item) => (
-            <article
-              key={item.id}
-              className="py-6 sm:py-8 group cursor-pointer transition-colors"
-              onClick={() => onRead(item)}
-            >
-              <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
-                <div className="flex flex-wrap items-center gap-2 text-xs font-sans text-[#78716c]">
-                  <time dateTime={item.date}>{item.date}</time>
-                  <span>·</span>
-                  <span className="font-bold text-[#1c1917] tracking-wider text-[10px] uppercase bg-[#f0ece1] px-2 py-0.5 rounded">
-                    {item.categoryLabel}
+            <article key={item.id} className="py-6 sm:py-8 group">
+              <Link href={`/article/${item.slug}`} className="block">
+                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
+                  <div className="flex flex-wrap items-center gap-2 text-xs font-sans text-[#78716c]">
+                    <time dateTime={item.date}>{item.date}</time>
+                    <span>·</span>
+                    <span className="font-bold text-[#1c1917] tracking-wider text-[10px] uppercase bg-[#f0ece1] px-2 py-0.5 rounded">
+                      {item.categoryLabel}
+                    </span>
+                    <span>·</span>
+                    <span>{item.readTime}</span>
+                  </div>
+                  <span className="text-[11px] font-sans text-[#78716c] hidden sm:block">
+                    Oleh {item.author}
                   </span>
-                  <span>·</span>
-                  <span>{item.readTime}</span>
                 </div>
-                <span className="text-[11px] font-sans text-[#78716c] hidden sm:block">
-                  Oleh {item.author}
-                </span>
-              </div>
 
-              <h4 className="font-serif text-lg sm:text-2xl font-bold text-[#1c1917] group-hover:text-[#44403c] transition-colors leading-snug">
-                {item.title}
-              </h4>
+                <h4 className="font-serif text-lg sm:text-2xl font-bold text-[#1c1917] group-hover:text-[#44403c] transition-colors leading-snug">
+                  {item.title}
+                </h4>
 
-              <p className="mt-2 text-sm sm:text-base font-serif leading-relaxed text-[#57534e] line-clamp-2">
-                {item.excerpt}
-              </p>
+                <p className="mt-2 text-sm sm:text-base font-serif leading-relaxed text-[#57534e] line-clamp-2">
+                  {item.excerpt}
+                </p>
+              </Link>
             </article>
           ))}
         </div>

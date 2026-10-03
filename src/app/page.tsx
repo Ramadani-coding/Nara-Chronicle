@@ -6,13 +6,11 @@ import { HeroSection } from "@/components/HeroSection";
 import { FeaturedArticle } from "@/components/FeaturedArticle";
 import { ArticleList } from "@/components/ArticleList";
 import { Footer } from "@/components/Footer";
-import { ArticleModal } from "@/components/ArticleModal";
 import { AboutModal } from "@/components/AboutModal";
-import { MOCK_ARTICLES, Article, CategoryType } from "@/data/mockArticles";
+import { MOCK_ARTICLES, CategoryType } from "@/data/mockArticles";
 
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState<"ALL" | CategoryType>("ALL");
-  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const [aboutOpen, setAboutOpen] = useState(false);
 
   // Filter articles by category
@@ -40,7 +38,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#faf9f5] text-[#1c1917] selection:bg-[#eae5d9]">
-      {/* 1. Clean Minimal Header (Brand + Links, NO category buttons) */}
+      {/* 1. Clean Minimal Header */}
       <Header
         onOpenAbout={() => setAboutOpen(true)}
         onHomeClick={() => setActiveTab("ALL")}
@@ -52,19 +50,15 @@ export default function HomePage() {
 
         {/* 3. Featured Article (shown on ALL or when active category is ARSITEKTUR_SISTEM) */}
         {(activeTab === "ALL" || activeTab === featured.category) && (
-          <FeaturedArticle
-            article={featured}
-            onRead={(art) => setSelectedArticle(art)}
-          />
+          <FeaturedArticle article={featured} />
         )}
 
-        {/* 4. Article List with In-Page Category Filter Tabs */}
+        {/* 4. Article List with In-Page Category Filter Tabs & Direct Detail Links */}
         <div id="articles-section">
           <ArticleList
             articles={listArticles}
             activeCategory={activeTab}
             onSelectCategory={(cat) => setActiveTab(cat)}
-            onRead={(art) => setSelectedArticle(art)}
           />
         </div>
       </main>
@@ -72,13 +66,7 @@ export default function HomePage() {
       {/* 5. Footer */}
       <Footer onOpenAbout={() => setAboutOpen(true)} />
 
-      {/* 6. Fullscreen / Pop-up Reading Modal */}
-      <ArticleModal
-        article={selectedArticle}
-        onClose={() => setSelectedArticle(null)}
-      />
-
-      {/* 7. About Modal */}
+      {/* 6. About Modal */}
       <AboutModal
         isOpen={aboutOpen}
         onClose={() => setAboutOpen(false)}
