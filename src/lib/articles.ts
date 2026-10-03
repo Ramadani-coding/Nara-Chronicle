@@ -129,24 +129,49 @@ export interface CommentItem {
 export const getCommentsByArticleSlug = cache(
   async (slug: string): Promise<CommentItem[]> => {
     try {
-      const article = await prisma.article.findUnique({
-        where: { slug },
-        select: { id: true },
-      });
-      if (!article) return [];
+      // Check if prisma.comment delegate is present on client instance
+      const commentDelegate = (prisma as any).comment;
+      if (commentDelegate && typeof commentDelegate.findMany === "function") {
+        const article = await prisma.article.findUnique({
+          where: { slug },
+          select: { id: true },
+        });
+        if (!article) return [];
 
-      const comments = await prisma.comment.findMany({
-        where: { articleId: article.id },
-        orderBy: { createdAt: "desc" },
-        take: 50,
-      });
+        const comments = await commentDelegate.findMany({
+          where: { articleId: article.id },
+          orderBy: { createdAt: "desc" },
+          take: 50,
+        });
 
-      return comments.map((c) => ({
+        return comments.map((c: any) => ({
+          id: c.id,
+          articleId: c.articleId,
+          author: c.author,
+          content: c.content,
+          createdAt: c.createdAt instanceof Date ? c.createdAt.toISOString() : String(c.createdAt),
+        }));
+      }
+
+      // Fallback for stale dev server singleton before server restart
+      const rows = await prisma.$queryRawUnsafe<any[]>(
+        `
+        SELECT c.id, c."articleId", c.author, c.content, c."createdAt"
+        FROM "Comment" c
+        JOIN "Article" a ON a.id = c."articleId"
+        WHERE a.slug = $1
+        ORDER BY c."createdAt" DESC
+        LIMIT 50
+        `,
+        slug
+      );
+
+      return rows.map((c) => ({
         id: c.id,
         articleId: c.articleId,
         author: c.author,
         content: c.content,
-        createdAt: c.createdAt.toISOString(),
+        createdAt: c.createdAt instanceof Date ? c.createdAt.toISOString() : String(c.createdAt),
       }));
     } catch (err) {
       console.error("Prisma getCommentsByArticleSlug failed:", err);
