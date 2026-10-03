@@ -22,7 +22,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExplore }) => {
 
         {/* Subtext description */}
         <p className="font-serif text-base sm:text-lg md:text-xl leading-relaxed text-[#57534e] max-w-2xl">
-          Nara Chronicle adalah rekaman terbuka dari eksperimen nyata Rama bersama Fern. Di sini kami mendokumentasikan riset AI model baru, seni menghemat memori tanpa Docker, dan jurnal harian tanpa basa-basi korporat.
+          Catatan tentang hal yang jarang dibagi orang di internet. Dari obrolan jujur tengah malam, rencana yang sempat berantakan, sampai cerita kami yang lagi belajar bertahan di jalan sendiri.
         </p>
       </div>
     </section>
