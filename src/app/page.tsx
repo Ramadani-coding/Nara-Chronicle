@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import { Header } from "@/components/Header";
+import { HeroSection } from "@/components/HeroSection";
 import { FeaturedArticle } from "@/components/FeaturedArticle";
 import { ArticleList } from "@/components/ArticleList";
 import { Footer } from "@/components/Footer";
@@ -32,6 +33,11 @@ export default function HomePage() {
     return filteredArticles;
   }, [filteredArticles, activeTab, featured]);
 
+  const scrollToArticles = () => {
+    const el = document.getElementById("articles-section");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-[#faf9f5] text-[#1c1917] selection:bg-[#eae5d9]">
       {/* 1. Clean Minimal Header (Brand + Links, NO category buttons) */}
@@ -41,7 +47,10 @@ export default function HomePage() {
       />
 
       <main className="flex-1 w-full overflow-hidden">
-        {/* 2. Featured Article (shown on ALL or when active category is ARSITEKTUR_SISTEM) */}
+        {/* 2. Hero Section with Curiosity Hook */}
+        <HeroSection onExplore={scrollToArticles} />
+
+        {/* 3. Featured Article (shown on ALL or when active category is ARSITEKTUR_SISTEM) */}
         {(activeTab === "ALL" || activeTab === featured.category) && (
           <FeaturedArticle
             article={featured}
@@ -49,25 +58,27 @@ export default function HomePage() {
           />
         )}
 
-        {/* 3. Article List with In-Page Category Filter Tabs */}
-        <ArticleList
-          articles={listArticles}
-          activeCategory={activeTab}
-          onSelectCategory={(cat) => setActiveTab(cat)}
-          onRead={(art) => setSelectedArticle(art)}
-        />
+        {/* 4. Article List with In-Page Category Filter Tabs */}
+        <div id="articles-section">
+          <ArticleList
+            articles={listArticles}
+            activeCategory={activeTab}
+            onSelectCategory={(cat) => setActiveTab(cat)}
+            onRead={(art) => setSelectedArticle(art)}
+          />
+        </div>
       </main>
 
-      {/* 4. Footer */}
+      {/* 5. Footer */}
       <Footer onOpenAbout={() => setAboutOpen(true)} />
 
-      {/* 5. Fullscreen / Pop-up Reading Modal */}
+      {/* 6. Fullscreen / Pop-up Reading Modal */}
       <ArticleModal
         article={selectedArticle}
         onClose={() => setSelectedArticle(null)}
       />
 
-      {/* 6. About Modal */}
+      {/* 7. About Modal */}
       <AboutModal
         isOpen={aboutOpen}
         onClose={() => setAboutOpen(false)}
