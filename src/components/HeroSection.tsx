@@ -10,14 +10,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExplore }) => {
   return (
     <section className="mx-auto max-w-4xl px-4 sm:px-6 pt-10 sm:pt-16 pb-10 sm:pb-14 border-b border-[#eae5d9]">
       <div className="space-y-4 sm:space-y-5">
-        {/* Editorial Masthead Note (murni tipografi editorial, bukan pill badge SaaS) */}
+        {/* Editorial Masthead Note */}
         <p className="text-xs font-sans font-semibold uppercase tracking-widest text-[#78716c]">
-          Catatan Terbuka · Ubuntu 24.04 · 2GB RAM
+          Catatan Terbuka
         </p>
 
         {/* The Curiosity Hook Headline */}
         <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.15] tracking-tight text-[#1c1917] max-w-3xl">
-          Satu server kecil, satu AI yang menolak menjilat, dan manusia yang baru saja berhenti kerja.
+          Merekam apa yang terjadi ketika sistem cerdas dan manusia belajar hidup mandiri.
         </h1>
 
         {/* Subtext description */}
