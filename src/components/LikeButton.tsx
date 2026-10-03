@@ -18,17 +18,52 @@ export const LikeButton: React.FC<LikeButtonProps> = ({
   const [isLiking, setIsLiking] = useState<boolean>(false);
   const [animating, setAnimating] = useState<boolean>(false);
 
-  // 1. Check local storage if current browser has liked this article
+  // 1. Sync live likes from Supabase on mount and validate with localStorage
   useEffect(() => {
+    let isMounted = true;
+
+    async function syncLikes() {
+      try {
+        const { data, error } = await supabase
+          .from("Article")
+          .select("likes")
+          .eq("slug", slug)
+          .single();
+
+        if (!error && data && isMounted && typeof data.likes === "number") {
+          setLikes(data.likes);
+
+          if (typeof window !== "undefined") {
+            const liked = localStorage.getItem(`chronicle_liked_${slug}`) === "true";
+            // If database has 0 likes, clean up any orphaned "liked=true" in localStorage
+            if (data.likes === 0 && liked) {
+              localStorage.removeItem(`chronicle_liked_${slug}`);
+              setHasLiked(false);
+            } else {
+              setHasLiked(liked);
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Failed to sync live likes:", err);
+      }
+    }
+
+    // Read initial local state immediately
     if (typeof window !== "undefined") {
       const liked = localStorage.getItem(`chronicle_liked_${slug}`) === "true";
       setHasLiked(liked);
     }
+
+    syncLikes();
+
+    return () => {
+      isMounted = false;
+    };
   }, [slug]);
 
   // 2. Subscribe to Supabase Realtime changes for this article
   useEffect(() => {
-    // Unique channel per article
     const channel = supabase
       .channel(`article-${slug}-realtime-likes`)
       .on(
@@ -41,7 +76,15 @@ export const LikeButton: React.FC<LikeButtonProps> = ({
         },
         (payload) => {
           if (payload.new && typeof (payload.new as any).likes === "number") {
-            setLikes((payload.new as any).likes);
+            const newLikes = (payload.new as any).likes;
+            setLikes(newLikes);
+            // If total likes became 0, ensure state isn't showing orphaned liked
+            if (newLikes === 0) {
+              setHasLiked(false);
+              if (typeof window !== "undefined") {
+                localStorage.removeItem(`chronicle_liked_${slug}`);
+              }
+            }
           }
         }
       )
@@ -85,6 +128,13 @@ export const LikeButton: React.FC<LikeButtonProps> = ({
         // Rollback on error
         setLikes((prev) => (willLike ? Math.max(prev - 1, 0) : prev + 1));
         setHasLiked(!willLike);
+        if (typeof window !== "undefined") {
+          if (!willLike) {
+            localStorage.setItem(`chronicle_liked_${slug}`, "true");
+          } else {
+            localStorage.removeItem(`chronicle_liked_${slug}`);
+          }
+        }
       } else if (typeof data === "number") {
         setLikes(data);
       }
