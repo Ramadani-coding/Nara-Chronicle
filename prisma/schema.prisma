@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Article {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  number        String?
+  title         String
+  category      String
+  categoryLabel String
+  date          String
+  publishedAt   DateTime @default(now())
+  readTime      String?
+  author        String   @default("Fern")
+  excerpt       String
+  content       String   @db.Text
+  isFeatured    Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([slug])
+  @@index([category])
+  @@index([publishedAt])
+}
