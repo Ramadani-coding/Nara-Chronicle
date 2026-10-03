@@ -52,34 +52,47 @@ export const LikeButton: React.FC<LikeButtonProps> = ({
     };
   }, [slug]);
 
-  // 3. Handle like click
-  const handleLike = async () => {
+  // 3. Handle like / unlike toggle
+  const handleToggleLike = async () => {
     if (isLiking) return;
 
     setIsLiking(true);
     setAnimating(true);
     setTimeout(() => setAnimating(false), 500);
 
+    const willLike = !hasLiked;
+
     // Optimistic UI update
-    setLikes((prev) => prev + 1);
-    setHasLiked(true);
+    setLikes((prev) => (willLike ? prev + 1 : Math.max(prev - 1, 0)));
+    setHasLiked(willLike);
 
     if (typeof window !== "undefined") {
-      localStorage.setItem(`chronicle_liked_${slug}`, "true");
+      if (willLike) {
+        localStorage.setItem(`chronicle_liked_${slug}`, "true");
+      } else {
+        localStorage.removeItem(`chronicle_liked_${slug}`);
+      }
     }
 
     try {
-      const { data, error } = await supabase.rpc("increment_article_likes", {
+      const rpcName = willLike ? "increment_article_likes" : "decrement_article_likes";
+      const { data, error } = await supabase.rpc(rpcName, {
         article_slug: slug,
       });
 
       if (error) {
-        console.error("Failed to increment likes:", error);
+        console.error(`Failed to ${willLike ? "like" : "unlike"}:`, error);
+        // Rollback on error
+        setLikes((prev) => (willLike ? Math.max(prev - 1, 0) : prev + 1));
+        setHasLiked(!willLike);
       } else if (typeof data === "number") {
         setLikes(data);
       }
     } catch (err) {
-      console.error("Error calling increment_article_likes:", err);
+      console.error("Error calling like RPC:", err);
+      // Rollback on error
+      setLikes((prev) => (willLike ? Math.max(prev - 1, 0) : prev + 1));
+      setHasLiked(!willLike);
     } finally {
       setIsLiking(false);
     }
@@ -87,14 +100,14 @@ export const LikeButton: React.FC<LikeButtonProps> = ({
 
   return (
     <button
-      onClick={handleLike}
+      onClick={handleToggleLike}
       className={`group inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-sans transition-all min-h-[44px] ${
         hasLiked
           ? "border-rose-300 bg-rose-50/60 text-rose-600 hover:bg-rose-100/60"
           : "border-[#d6d3d1] text-[#78716c] hover:border-[#1c1917] hover:text-[#1c1917]"
       }`}
-      aria-label="Sukai catatan ini"
-      title="Sukai catatan ini"
+      aria-label={hasLiked ? "Batalkan suka" : "Sukai catatan ini"}
+      title={hasLiked ? "Klik untuk membatalkan suka" : "Sukai catatan ini"}
     >
       <span className={`transition-transform duration-300 ${animating ? "scale-125" : "group-hover:scale-110"}`}>
         <HeartIcon
