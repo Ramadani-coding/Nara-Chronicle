@@ -1,5 +1,6 @@
-# Multi-stage Dockerfile for Nara Chronicle (Next.js 15 + Prisma + Tailwind)
+# Multi-stage Dockerfile for Nara Chronicle (Next.js 15 + Prisma 6 + Tailwind)
 # Optimized for minimal footprint using Next.js Standalone output (~120MB)
+# Compatible with x86_64 and arm64 (Armbian / Raspberry Pi)
 
 # --- Stage 1: Base Dependencies ---
 FROM node:20-alpine AS deps
@@ -9,8 +10,8 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 COPY prisma ./prisma/
 
-# Install dependencies cleanly
-RUN npm ci
+# Install all dependencies using npm install so native binaries match host arch (arm64/x86_64)
+RUN npm install
 
 # --- Stage 2: Builder ---
 FROM node:20-alpine AS builder
@@ -19,6 +20,8 @@ WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+ENV PATH=/app/node_modules/.bin:$PATH
 
 # Environment variables needed at build time
 ARG DATABASE_URL
@@ -32,8 +35,8 @@ ENV NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL
 ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Generate Prisma Client for linux-musl
-RUN npx prisma generate
+# Generate Prisma Client using pinned local Prisma 6 (never npx auto-download Prisma 7)
+RUN ./node_modules/.bin/prisma generate
 
 # Build Next.js application (generates .next/standalone)
 RUN npm run build
