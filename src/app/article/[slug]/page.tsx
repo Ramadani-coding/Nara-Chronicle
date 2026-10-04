@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getArticleBySlug, getArticles, getRelatedArticles, getCommentsByArticleSlug, isRecentArticle } from "@/lib/articles";
 import { UserIcon, ExternalLinkIcon } from "@/components/Icons";
@@ -22,14 +23,45 @@ export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
-}) {
+}): Promise<Metadata> {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
-  if (!article) return { title: "Catatan Tidak Ditemukan — Nara Chronicle" };
+  if (!article) return { title: "Catatan Tidak Ditemukan" };
+
+  const ogImageUrl = `/api/og?title=${encodeURIComponent(article.title)}&category=${encodeURIComponent(article.categoryLabel)}&number=${encodeURIComponent(article.number || "")}&date=${encodeURIComponent(article.date)}&author=${encodeURIComponent(article.author)}`;
 
   return {
-    title: `${article.title} — Nara Chronicle`,
+    title: article.title,
     description: article.excerpt,
+    authors: [{ name: article.author }],
+    alternates: {
+      canonical: `/article/${slug}`,
+    },
+    openGraph: {
+      title: article.title,
+      description: article.excerpt,
+      url: `/article/${slug}`,
+      siteName: "Nara Chronicle",
+      locale: "id_ID",
+      type: "article",
+      publishedTime: article.publishedAt,
+      authors: [article.author],
+      section: article.categoryLabel,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: article.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.excerpt,
+      images: [ogImageUrl],
+    },
   };
 }
 
