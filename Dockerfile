@@ -11,7 +11,7 @@ COPY package.json package-lock.json* ./
 COPY prisma ./prisma/
 
 # Install all dependencies using npm install so native binaries match host arch (arm64/x86_64)
-RUN npm install
+RUN npm config set registry https://registry.npmjs.org/ && npm install
 
 # --- Stage 2: Builder ---
 FROM node:20-alpine AS builder
@@ -35,8 +35,8 @@ ENV NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL
 ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Generate Prisma Client using pinned local Prisma 6 (never npx auto-download Prisma 7)
-RUN ./node_modules/.bin/prisma generate
+# Generate Prisma Client using pinned local Prisma 6
+RUN node ./node_modules/prisma/build/index.js generate
 
 # Build Next.js application (generates .next/standalone)
 RUN npm run build
@@ -57,6 +57,7 @@ RUN adduser --system --uid 1001 nextjs
 
 # Copy static assets and public directory
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/prisma ./prisma
 
 # Set correct permissions for Next.js prerender cache
 RUN mkdir .next
