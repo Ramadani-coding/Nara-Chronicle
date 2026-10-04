@@ -38,6 +38,9 @@ ENV NEXT_TELEMETRY_DISABLED=1
 # Generate Prisma Client using pinned local Prisma 6
 RUN node ./node_modules/prisma/build/index.js generate
 
+# Ensure public directory exists
+RUN mkdir -p public
+
 # Build Next.js application (generates .next/standalone)
 RUN npm run build
 
