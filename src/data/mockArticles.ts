@@ -44,6 +44,59 @@ export const CATEGORIES: { id: "ALL" | CategoryType; label: string; description:
 // Diurutkan dari yang paling baru (newest first)
 export const MOCK_ARTICLES: Article[] = [
   {
+    id: "chronicle-13",
+    slug: "lompatan-ling-3-1-flash-ant-group-moe-560b",
+    number: "№13",
+    title: "Lompatan Ekosistem Terbuka: Membedah Ling-3.1-Flash 560B Milik Ant Group dan Perang Efisiensi MoE",
+    category: "BERITA_TECH_AI",
+    categoryLabel: "Berita & Update AI",
+    date: "04 Okt 2026",
+    publishedAt: "2026-10-04T08:35:00+08:00",
+    readTime: "5 min baca",
+    author: "Fern",
+    isFeatured: false,
+    views: 0,
+    likes: 0,
+    excerpt:
+      "Ant Group melalui InclusionAI resmi melepas Ling-3.1-flash ke publik. Model Mixture of Experts raksasa berkapasitas 560 miliar parameter dengan 25 miliar parameter aktif, target konteks 1 juta token, dan komitmen rilis bobot terbuka yang menantang dominasi lab AI barat.",
+    content: `Sorotan komunitas kecerdasan buatan dunia selama ini kerap tersita oleh manuver laboratorium besar di Amerika Serikat atau persaingan model terbuka dari nama-nama populer seperti DeepSeek dan Moonshot AI. Namun akhir pekan ini, divisi kecerdasan buatan Ant Group, InclusionAI, mengambil langkah mengejutkan dengan melepas Ling-3.1-flash ke peredaran global.
+
+Bukan sekadar rilis uji coba internal, model bahasa baru ini hadir dengan konfigurasi arsitektur Mixture of Experts (MoE) masif berkapasitas 560 miliar parameter total, jendela konteks hingga 1 juta token, serta komitmen pelepasan bobot model secara terbuka (open weights) begitu masa evaluasi selesai.
+
+### Arsitektur MoE dan Efisiensi Rasio Aktivasi Rendah
+
+Hal paling memikat dari sudut pandang rekayasa sistem adalah rasio aktivasi per token yang sangat ramping. Dari total 560 miliar parameter yang tersemat di dalam arsitektur model, hanya sekitar 25 miliar parameter yang aktif diproses untuk setiap token inferensi. Rasio aktivasi di bawah 5 persen ini menunjukkan kedewasaan desain MoE Ant Group dalam menyeimbangkan kapasitas memori pengetahuan dengan kecepatan eksekusi.
+
+Model dense konvensional dengan ukuran ratusan miliar parameter membutuhkan klaster GPU skala besar hanya untuk melayani inferensi dasar dan menghasilkan latensi yang lambat bagi pengguna akhir. Dengan strategi sparsity MoE yang agresif, Ling-3.1-flash mampu memberikan kedalaman penalaran (reasoning) setara model raksasa, namun dengan biaya komputasi per token dan latensi yang setara dengan model kelas menengah 20 hingga 30 miliar parameter.
+
+Model ini juga dirancang untuk menangani tugas penalaran hibrida (hybrid reasoning), pemanggilan alat (tool use) untuk agen otonom, analisis multi-tahap, koding, dan pengolahan dokumen panjang.
+
+### Strategi Distribusi Agresif Tanpa Pungutan Biaya Awal
+
+Langkah Ant Group kali ini juga tergolong tidak biasa dari segi strategi distribusi. Biasanya, laboratorium AI merilis pengumuman bersamaan dengan daftar harga API per juta token. Dalam kasus Ling-3.1-flash, Ant memilih mendistribusikan modelnya secara gratis langsung ke agregator pengembang populer dunia.
+
+Platform seperti Vercel AI Gateway dan OpenRouter sudah membuka akses instan ke model ini tanpa memungut biaya token prompt maupun token completion hingga 13 Oktober 2026. Dalam fase promosi dua pekan ini, jendela konteks dibatasi sementara pada 262.144 token dengan batas keluaran hingga 32.768 token, sebelum nantinya jendela penuh 1 juta token dibuka bersamaan dengan pelepasan bobot model di repositori Hugging Face dan ModelScope.
+
+Taktik ini jelas merupakan langkah taktis untuk merebut perhatian pengembang global yang saat ini tengah membangun pipeline agen AI mandiri dan mencari alternatif model performa tinggi selain Claude, GPT, atau DeepSeek.
+
+### Persaingan Terbuka Melawan Hegemoni Lab Tertutup
+
+Kemunculan Ling-3.1-flash menandakan pergeseran penting dalam peta persaingan kecerdasan buatan global. Ketika lab-lab frontier tertutup di barat mulai membatasi akses model terdepan mereka di balik lisensi korporat yang mahal dan sensor ketat, ekosistem model terbuka justru bergerak ke arah sebaliknya.
+
+Kombinasi model MoE skala ratusan miliar parameter, konteks super panjang, dan lisensi terbuka memberikan fleksibilitas penuh bagi tim pengembang independen untuk mengintegrasikan model ke sistem privat tanpa khawatir terkunci oleh satu vendor API komersial tertentu.
+
+> "Kemenangan nyata efisiensi AI bukan terletak pada seberapa besar parameter yang bisa dimasukkan ke dalam pusat data, melainkan seberapa sedikit komputasi yang perlu dibakar untuk menghasilkan satu keputusan yang presisi."
+
+### Sumber dan Dokumen Rujukan Resmi
+
+Seluruh catatan teknis dan rilis data dalam ulasan ini merujuk langsung pada dokumentasi resmi dan pengumuman platform pengembang tertanggal 1 hingga 3 Oktober 2026.
+
+- [Dokumentasi Resmi Model Ling Ant Group](https://developer.ant-ling.com/en/docs/models/ling)
+- [Pengumuman Ketersediaan Ling-3.1-flash di Vercel AI Gateway](https://vercel.com/changelog/ling-3-1-flash-is-now-available-on-ai-gateway)
+- [Spesifikasi Teknis dan Playground Ling-3.1-flash di OpenRouter](https://openrouter.ai/inclusionai/ling-3.1-flash)
+- [Laporan Liputan Peluncuran Model 560B Ant Group di TechNode](https://technode.com/2026/09/30/ant-group-launches-ling-3-1-flash-with-560-billion-parameters/)`,
+  },
+  {
     id: "chronicle-12",
     slug: "menjaga-server-tetap-dingin-di-pukul-tiga-subuh",
     number: "№12",
