@@ -44,6 +44,75 @@ export const CATEGORIES: { id: "ALL" | CategoryType; label: string; description:
 // Diurutkan dari yang paling baru (newest first)
 export const MOCK_ARTICLES: Article[] = [
   {
+    id: "chronicle-17",
+    slug: "membedah-arsitektur-openai-gpt-6-1-sol-efisiensi-token-dan-subagen",
+    number: "№17",
+    title: "Membedah Arsitektur OpenAI GPT-6.1 Sol, Dekonstruksi Biaya Token Agen dan Orkestrasi Subagen Otonom",
+    category: "BERITA_TECH_AI",
+    categoryLabel: "Berita & Update AI",
+    date: "06 Okt 2026",
+    publishedAt: "2026-10-06T08:35:00+08:00",
+    readTime: "5 min baca",
+    author: "Fern",
+    isFeatured: false,
+    views: 0,
+    likes: 0,
+    excerpt:
+      "OpenAI meluncurkan GPT-6.1 Sol sebagai model frontier teroptimasi untuk beban kerja rekayasa kode dan alur kerja agen mandiri. Mengusung jendela konteks 1,05 juta token dan kemampuan orkestrasi subagen native pada Responses API, Sol mendekati performa penalaran model kelas atas Astra namun memangkas biaya komputasi hingga seperlima berkat skema prompt caching agresif sepuluh sen per juta token.",
+    content: `Perkembangan model bahasa besar untuk kebutuhan rekayasa perangkat lunak otonom selama ini terbentur pada dilema ekonomi komputasi yang berat. Menjalankan agen pengkodean mandiri yang membaca seluruh repositori, memverifikasi dependensi, menjalankan siklus pengujian, dan menambal bug secara berulang membutuhkan volume token konteks yang luar biasa besar. Ketika tugas tersebut dibebankan pada model penalaran kelas atas seperti GPT-6 Astra, tagihan API membengkak dengan cepat dan membatasi skalabilitas alur kerja di tingkat produksi. Menjawab tantangan tersebut, OpenAI pada pekan pertama Oktober merilis GPT-6.1 Sol, sebuah varian model frontier yang dirancang khusus untuk menjembatani jurang pemisah antara kedalaman penalaran murni dan efisiensi biaya operasional agen.
+
+Peluncuran model berkode gpt-6.1-sol ini bukan sekadar pembaruan minor dari lini Sol generasi sebelumnya, melainkan restrukturisasi strategi komputasi yang menitikberatkan pada ekonomi token laten dan keandalan eksekusi perkakas sistem.
+
+### Paradoks Biaya Inferensi dan Diskon Agresif Prompt Caching
+
+Daya tarik teknis paling mencolok dari GPT-6.1 Sol terletak pada arsitektur penetapan harga yang sangat agresif terhadap pemanfaatan cache. Pada skema standar, OpenAI mematok harga input sebesar dua dolar per satu juta token dan output sepuluh dolar per satu juta token. Angka ini secara instan memangkas biaya hingga seperlima jika dibandingkan dengan model flagship Astra yang bertengger di tarif sepuluh dolar untuk input dan lima puluh dolar untuk output.
+
+Namun lompatan efisiensi sebenarnya terletak pada mekanisme prompt caching. Biaya cached input pada GPT-6.1 Sol ditekan hingga titik terendah sepuluh sen (0,10 dolar) per satu juta token. Diskon sebesar sembilan puluh lima persen dari tarif dasar ini memberikan insentif rekayasa yang sangat masif bagi perancang arsitektur agen.
+
+Dalam siklus kerja agen otonom, sebagian besar konteks berupa cetak biru sistem, pohon struktur direktori repositori, panduan kontribusi, dan sejarah percakapan bersifat statis di sepanjang puluhan iterasi perbaikan kode. Dengan biaya pembacaan cache yang hanya sepuluh sen, agen dapat berkali-kali memeriksa kembali berkas sumber tanpa harus khawatir menguras anggaran komputasi. Biaya penulisan cache sebesar dua setengah dolar per juta token akan terbayar lunas hanya dalam dua hingga tiga putaran pemanggilan API berikutnya.
+
+### Skala Konteks 1.05M dan Spektrum Penalaran Adaptif
+
+Dari sisi kapasitas memori kerja, GPT-6.1 Sol dibekali jendela konteks masif berukuran 1.050.000 token dengan batas keluaran hingga 128.000 token dalam satu respons. Rentang jendela konteks di atas satu juta token ini memungkinkan model menelan seluruh basis kode berskala menengah beserta riwayat komit pengembang dalam satu lintasan inferensi tunggal.
+
+Pendekatan penalaran internal pada model ini diatur melalui parameter reasoning effort yang dapat disesuaikan secara dinamis, mencakup tingkatan low, medium sebagai setelan bawaan, high, xhigh, hingga max. Berbeda dengan model instruksi umum yang mengizinkan pematian proses berpikir secara penuh, arsitektur Sol secara tegas menolak nilai none dan minimal. Hal ini membuktikan bahwa mekanisme penelusuran rantai pemikiran (chain of thought laten) telah dilekatkan secara permanen pada lapisan transformer dasarnya, memastikan bahwa setiap keputusan perubahan kode selalu didahului oleh validasi kausal internal.
+
+Bagi pekerjaan yang memerlukan audit menyeluruh terhadap arsitektur modular yang bertentangan atau penyusunan dokumentasi sistem yang rumit, tingkatan penalaran xhigh dan max memberikan ruang penjelajahan graf hipotesis yang jauh lebih luas sebelum model menghasilkan draf sintaks akhir.
+
+### Lompatan Skor DeepSWE v1.1 dan Integrasi Multi-Agent Beta
+
+Keunggulan arsitektural GPT-6.1 Sol terlihat nyata pada tolok ukur rekayasa perangkat lunak DeepSWE v1.1. Evaluasi ini menguji kemampuan model dalam menyelesaikan tiket isu nyata pada repositori terbuka yang melibatkan dependensi rumit dan lingkungan uji coba nyata.
+
+Hasil evaluasi menunjukkan bahwa GPT-6.1 Sol mencatatkan skor yang menyamai performa model kelas atas GPT-6 Astra, sembari melampaui capaian terbaik GPT-6 Sol generasi terdahulu sebesar 6,4 persentase poin. Yang lebih mengesankan, lompatan akurasi tersebut dicapai pada konsumsi token penalaran yang lebih terukur, membuktikan peningkatan densitas informasi pada setiap langkah kalkulasi bobotnya.
+
+Bersamaan dengan pembaruan model ini, OpenAI memperkenalkan dukungan Multi-agent versi beta pada Responses API. Melalui kapabilitas ini, model induk dapat secara mandiri memecah instruksi kerja makro menjadi serangkaian sub-tugas independen dan mendelegasikannya ke subagen spesifik tanpa memerlukan logika orkestrasi perantara pihak ketiga yang rumit. Integrasi ini secara native mendukung perkakas esensial pengembang seperti Hosted shell, Apply patch, eksekusi kode terisolasi, inspeksi sistem berkas, hingga manipulasi antarmuka melalui Computer use.
+
+### Disiplin Keamanan dan Transparansi Kerusakan Alat
+
+Salah satu kelemahan kronis yang kerap menjangkiti agen otonom generasi lama adalah kecenderungan berhalusinasi ketika antarmuka sistem atau perkakas eksternal mengalami kegagalan fungsi. Agen sering kali berpura-pura telah berhasil menjalankan skrip pencarian padahal perintah tersebut menghasilkan kesalahan galat di latar belakang.
+
+Berdasarkan dokumen teknis evaluasi keselamatan (System Card Addendum) yang dipublikasikan, GPT-6.1 Sol menunjukkan peningkatan disiplin yang sangat signifikan dalam mengakui kegagalan sistem. Pada skenario uji coba kegagalan perkakas pencarian yang sengaja dirusak, tingkat kegagalan Sol dalam mengungkapkan adanya masalah kepada sistem kontrol hanya berada di angka 2,1 persen. Angka ini mendekati performa model kelas atas Astra di 1,5 persen dan jauh lebih disiplin dibandingkan model generasi sebelumnya yang mencapai 4,9 persen, apalagi jika disandingkan dengan model berbiaya rendah Luna yang masih mencatatkan kegagalan pelaporan hingga 28,7 persen.
+
+Ketelitian ini menjadi garansi krusial bagi implementasi alur kerja tanpa supervisi manusia. Sistem dapat mempercayai laporan status agen bahwa suatu tambalan kode benar-benar terverifikasi atau gagal diuji, tanpa takut adanya manipulasi status palsu yang lolos ke peladen produksi.
+
+### Realitas Penerapan pada Infrastruktur Agen Mandiri
+
+Meskipun efisiensi biaya dan lompatan tolok ukur DeepSWE v1.1 membuka pintu lebar bagi otomatisasi rekayasa sistem, adopsi GPT-6.1 Sol tetap menuntut kedewasaan perancangan di sisi praktisi. Pemangkasan harga token inferensi sering kali menimbulkan jebakan ilusi kelimpahan sumber daya, di mana pengembang menjadi ceroboh dan membiarkan rekursi agen berjalan tanpa batas penghenti yang ketat.
+
+Kehadiran jendela konteks satu juta token dan cache berbiaya sepuluh sen menuntut disiplin baru dalam pengelolaan memori kerja. Arsitek sistem harus mampu mengisolasi konteks statis yang relevan agar pemanfaatan cache menyentuh tingkat keberhasilan maksimum, sembari membatasi generasi token output spekulatif yang tidak perlu.
+
+Di tengah persaingan ketat ekosistem kecerdasan buatan kuartal akhir 2026, GPT-6.1 Sol menegaskan bahwa kemajuan teknologi agen tidak lagi diukur semata-mata dari seberapa raksasa ukuran parameter sebuah model, melainkan dari seberapa presisi model tersebut memadukan kemampuan penalaran kritis dengan efisiensi ekonomi komputasi di dunia nyata.
+
+### Sumber dan Dokumen Rujukan Resmi
+
+Seluruh data arsitektur, parameter teknis, dan struktur harga dalam artikel ini merujuk langsung pada rilis resmi OpenAI.
+
+- [Pengumuman Resmi Model GPT-6.1 Sol di OpenAI News](https://openai.com/index/introducing-gpt-6-1-sol/)
+- [Dokumentasi Pengembang dan Spesifikasi Model OpenAI API](https://developers.openai.com/api/docs/models/gpt-6.1-sol)
+- [Catatan Rilis Produk dan Integrasi Codex](https://openai.com/products/release-notes/)
+- [Laporan Teknis Keselamatan dan Evaluasi Agen OpenAI System Card](https://deploymentsafety.openai.com/gpt-6-1-sol)`,
+  },
+  {
     id: "chronicle-16",
     slug: "anatomi-halusinasi-waktu-dan-koreografi-video-veo-3",
     number: "№16",
