@@ -44,6 +44,63 @@ export const CATEGORIES: { id: "ALL" | CategoryType; label: string; description:
 // Diurutkan dari yang paling baru (newest first)
 export const MOCK_ARTICLES: Article[] = [
   {
+    id: "chronicle-19",
+    slug: "membedah-arsitektur-gemini-4-argon-output-1-juta-token-dan-rekayasa-sistem",
+    number: "№19",
+    title: "Membedah Arsitektur Gemini 4 Argon, Trajektori Penalaran 1 Juta Token dan Rekayasa Migrasi Sistem Skala Petabyte",
+    category: "BERITA_TECH_AI",
+    categoryLabel: "Berita & Update AI",
+    date: "07 Okt 2026",
+    publishedAt: "2026-10-07T08:35:00+08:00",
+    readTime: "5 min baca",
+    author: "Fern",
+    isFeatured: false,
+    views: 0,
+    likes: 0,
+    excerpt:
+      "Google DeepMind mengumumkan Gemini 4 Argon dengan lonjakan batas output hingga 1 juta token per trajektori inferensi tunggal. Menguji ketangguhan rekayasa sistem otonom melalui migrasi C/C++ ke safe Rust pada libgav1 serta pemangkasan ratusan tebibyte konsumsi memori armada data center, model ini mendefinisikan babak baru komputasi agen dengan diskon prompt caching agresif 95 persen.",
+    content: `Keterbatasan utama agen rekayasa perangkat lunak otonom selama ini terletak pada batas trajektori inferensi yang pendek. Batasan output token model konvensional yang kerap terhenti di angka 64 ribu token memaksa orkestrator sistem memecah tugas refaktor arsitektur kompleks menjadi potongan mikro terpisah. Fragmentasi ini menjadi pemicu utama halusinasi dependensi, hilangnya status konteks sistem berkas, dan kegagalan verifikasi menyeluruh. Menjawab hambatan tersebut, Google DeepMind merilis Gemini 4 Argon, model frontier yang memperluas plafon token keluaran hingga satu juta token dalam satu trajektori inferensi tunggal. Disertai pembuktian empiris pada migrasi basis kode C/C++ ke Rust dan pemangkasan ratusan tebibyte konsumsi memori data center Google, model ini menghadirkan pergeseran paradigma dari sekadar generator cuplikan sintaks menjadi agen rekayasa sistem berskala industri.
+
+### Trajektori 1 Juta Token dan Eliminasi Fragmentasi Konteks
+
+Plafon token keluaran satu juta token bukan sekadar angka pemanis pada lembar spesifikasi. Dalam alur kerja agen mandiri, kemampuan mempertahankan satu lintasan inferensi panjang tanpa terputus memungkinkan model menjalankan siklus pemikiran mendalam, merumuskan graf dependensi, mengevaluasi ratusan kasus uji coba tiruan, dan memvalidasi tipe sebelum menghasilkan artefak kode final.
+
+Pada tolok ukur DeepSWE v1.1 yang menguji penyelesaian isu teknis pada repositori perangkat lunak dunia nyata berskala besar, Gemini 4 Argon mencatatkan skor 77,9 persen. Angka ini menempatkannya di puncak pengujian agen pengkodean, mengungguli keterbatasan model generasi sebelumnya yang kerap kehabisan ruang output ketika menghadapi repositori multimodul dengan dependensi sirkular.
+
+### Validasi Empiris: Migrasi libgav1 dan Pembebasan 300 TiB RAM Data Center
+
+Berbeda dengan pola peluncuran AI generik yang dipenuhi janji abstrak, pengujian internal Google memberikan bukti empiris mengenai ketangguhan Argon pada sistem produksi level rendah.
+
+Studi kasus pertama tercermin pada libgav1, pustaka pengurai video sumber terbuka milik Google. Tim agen berbasis Argon ditugaskan merombak 32 ribu baris instruksi SIMD menjadi Rust yang aman memori. Melalui puluhan putaran eksperimen terpandu profil, agen menganalisis secara langsung keluaran assembly kompilator dan menyusun kode safe Rust yang secara otomatis mampu divektorkan oleh LLVM. Hasil akhirnya adalah decoder video berbasis Rust yang berjalan 2,7 kali lebih cepat dibanding versi porting Rust manual terdahulu, dengan kecocokan bit-level identik terhadap implementasi C++ aslinya. Skala migrasi ini bahkan diperluas hingga mencakup kernel Zircon pada Fuchsia OS yang menampung lebih dari 800 ribu baris kode.
+
+Studi kasus kedua terjadi pada level infrastruktur peladen. Tim agen Argon menganalisis telemetri profil armada mesin di pusat data Google secara otonom untuk mendeteksi alokasi memori yang tidak efisien. Hasil penerapan patch otonom tersebut seketika membebaskan lebih dari 300 TiB (tebibyte) memori kerja di seluruh armada peladen Google, dengan proyeksi penghematan kumulatif mencapai 500 TiB hingga 1 PiB (petabyte).
+
+### Ekonomi Inferensi dan Diskon Agresif Prompt Caching
+
+Dari perspektif ekonomi komputasi, Google menetapkan harga perkenalan Argon sebesar dua dolar per satu juta token input dan sepuluh dolar per satu juta token output. Struktur ini menyejajarkan Argon dengan model tier efisiensi frontier seperti GPT-6.1 Sol, sekaligus jauh lebih terjangkau dibanding model penalaran murni tanpa optimasi biaya.
+
+Kunci keberlanjutan alur kerja agen terletak pada skema prompt caching dengan diskon 95 persen terhadap harga token input dasar. Dalam skenario pengembangan perangkat lunak di mana ribuan baris dokumentasi API, skema basis data, dan aturan linting harus dibaca berulang kali di setiap giliran kerja agen, biaya pembacaan cache yang berada di kisaran sepuluh sen per juta token menghilangkan beban finansial yang selama ini menghambat adopsi loop agen otonom.
+
+### Pertahanan Siber dan Disiplin Penyelarasan Sandbox
+
+Dalam domain keamanan siber, Argon mencatatkan skor 68 persen pada tolok ukur perbaikan kerentanan CWE-bench v1. Melalui inisiatif Scan for Good bersama Wiz, model ini diuji secara langsung untuk memindai infrastruktur publik dan berhasil menemukan kerentanan kritis kebocoran data sensitif pada perangkat lunak rumah sakit global yang terlewatkan oleh generasi model sebelumnya.
+
+Namun, memberikan agen otonom kendali terhadap basis kode dan lingkungan eksekusi membawa risiko misalignment yang berbahaya. Google mengantisipasi hal ini melalui pemantauan aktivasi internal serta inspeksi rantai penalaran model secara real-time. Temuan audit perilaku ini sengaja diisolasi dan tidak diumpankan kembali ke dalam dataset pelatihan agar model tidak melatih dirinya sendiri untuk mengelabui filter pengawas. Selain itu, ketahanan terhadap manipulasi kontekstual dibuktikan lewat capaian teratas pada pengujian Indirect Prompt Injection dari Gray Swan.
+
+### Refleksi Penerapan bagi Pengembang dan Penjaga Sistem
+
+Kehadiran Gemini 4 Argon memberikan penegasan bahwa era rekayasa kecerdasan buatan telah bergeser dari sekadar percakapan interaktif menuju operasi sistem otonom tingkat rendah. Bagi pengembang dan penjaga infrastruktur, lonjakan kapabilitas ini bukan alasan untuk bersikap lengah atau menyerahkan kendali produksi secara serampangan. Kemampuan agen untuk menulis ratusan ribu baris kode dan mengutak-atik alokasi memori menuntut protokol isolasi lingkungan yang ketat, pengujian unit komprehensif, serta verifikasi manusia pada gerbang integrasi akhir.
+
+### Sumber dan Dokumen Rujukan Resmi
+
+Seluruh data arsitektur, parameter teknis, dan studi kasus dalam artikel ini merujuk pada rilis resmi Google DeepMind dan dokumentasi publik.
+
+- [Pengumuman Resmi Gemini 4 Argon di Google DeepMind Blog](https://deepmind.google/blog/gemini-4-argon-our-next-era-of-frontier-intelligence/)
+- [Laporan Rilis Model Gemini 4 Argon di The Keyword Google Blog](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/)
+- [Dokumentasi Evaluasi Keamanan dan Inisiatif Wiz Scan for Good](https://www.wiz.io/scan-for-good)
+- [Spesifikasi Tolok Ukur Rekayasa Perangkat Lunak DeepSWE Benchmark](https://deepmind.google/fairwind-program/)`,
+  },
+  {
     id: "chronicle-18",
     slug: "dialektika-benteng-vps-2gb-pertahanan-hening-dan-disiplin-karakter",
     number: "№18",
